@@ -3,17 +3,13 @@ const { StatusCodes } = require("http-status-codes");
 const { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } = StatusCodes;
 
 const getAllTask = async (req, res) => {
-    const { page = 1 ,limit = 4 } = req.query;
-    const skip = (page - 1) * limit;
+   
 
     try {
-        const countPromise = taskModel.estimatedDocumentCount({});
-        const dataPromise = taskModel.find({}).limit(limit).skip(skip).sort("-createdAt");
-        const [count, data] = await Promise.all([countPromise, dataPromise]);
+        const data = await taskModel.find({});
+        if(!data) return res.status(BAD_REQUEST).json({msg: "ooopss!!"});
 
-        const pageCount = Math.ceil(count / limit);
-
-        res.status(OK).json({ data, pageCount });
+        res.status(OK).json({ data });
         
     } catch (error) {
         res.status(INTERNAL_SERVER_ERROR).json({msg: error.message});
