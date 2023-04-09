@@ -20,6 +20,9 @@ app.use(express.json());
 
 //routes
 app.use("/api/tasks", taskRouter);
+app.use("/", (req, res) => {
+    res.status(200).send("Welcome")
+})
 
 const start = async () => {
     try {
