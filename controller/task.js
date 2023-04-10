@@ -19,10 +19,15 @@ const getAllTask = async (req, res) => {
 const addTask = async (req, res) => {
     const { task, date, reminder } = req.body;
     try {
-        const data = await taskModel.create({ task, date, reminder });
-        if(!data) return res.status(BAD_REQUEST).json({msg: "oopss!!"})
-
-        res.status(OK).json({data});
+        if(task !== '' && date !== ''){
+            const data = await taskModel.create({ task, date, reminder });
+            if(!data) return res.status(BAD_REQUEST).json({msg: "oopss!!"})
+    
+            res.status(OK).json({data});
+        }
+        else{
+            res.status(BAD_REQUEST).json({msg: "please enter empty field!!"})
+        }
     } catch (error) {
         res.status(INTERNAL_SERVER_ERROR).json({msg: error.message});
     }
