@@ -3,10 +3,8 @@ const { StatusCodes } = require("http-status-codes");
 const { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } = StatusCodes;
 
 const getAllTask = async (req, res) => {
-   
-
     try {
-        const data = await taskModel.find({});
+        const data = await taskModel.find({}).sort('-createdAt');
         if(!data) return res.status(BAD_REQUEST).json({msg: "ooopss!!"});
 
         res.status(OK).json({ data });
