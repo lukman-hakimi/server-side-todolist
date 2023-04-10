@@ -25,9 +25,6 @@ const addTask = async (req, res) => {
     
             res.status(OK).json({data});
         }
-        else{
-            res.status(BAD_REQUEST).json({msg: "please enter empty field!!"})
-        }
     } catch (error) {
         res.status(INTERNAL_SERVER_ERROR).json({msg: error.message});
     }
